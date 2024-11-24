@@ -1,0 +1,7 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Aerith'
+theme = 'PaperMod'
+[params]
+  [params.homeInfoParams]
+  Title = ""

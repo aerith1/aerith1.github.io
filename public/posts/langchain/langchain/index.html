@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Langchain尝试 | Aerith</title>
+<meta name="keywords" content="">
+<meta name="description" content="LangChain浅尝试
+LangChain 是一个应用框架，旨在简化使用大型语言模型的应用程序。作为一个语言模型集成框架，LangChain 的用例与一般语言模型的用例有很大的重叠。 重叠范围包括文档分析和总结摘要, 代码分析和聊天机器人。[1]LangChain提供了一个标准接口，用于将不同的语言模型（LLM）连接在一起，以及与其他工具和数据源的集成。LangChain还为常见应用程序提供端到端链，如聊天机器人、文档分析和代码生成。 LangChain是由Harrison Chase于2022年10月推出的开源软件项目。它已成为LLM开发中最受欢迎的框架之一。
+RAG工作模式
+Retrive: give user a input , relevant splits are retrived from storage using  a Retriever
+Generate: A ChatModel / LLM produces an answer using a prompt that includes both the question with the retrieved data
+
+语句向量化
+数据向量化可分为以下几个步骤：
+加载数据集
+划分数据
+存储数据（向量数据库）
+
+构建RAG(TEST)
+
+
+A chat model
+ChatGPT
+pip install -qU langchain-openai
+import getpass
+import os
+
+os.environ[&#34;OPENAI_API_KEY&#34;] = &#34;your_openai_key&#34;
+
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model=&#34;gpt-3-turbo&#34;)
+本地llama">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/langchain/langchain/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/langchain/langchain/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Aerith (Alt + H)">Aerith</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Langchain尝试
+    </h1>
+    <div class="post-meta"><span title='2024-12-06 11:58:35 +0800 CST'>December 6, 2024</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="langchain浅尝试">LangChain浅尝试<a hidden class="anchor" aria-hidden="true" href="#langchain浅尝试">#</a></h1>
+<p>LangChain 是一个<a href="https://zh.wikipedia.org/wiki/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6">应用框架</a>，旨在简化使用<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B">大型语言模型</a>的应用程序。作为一个语言模型集成框架，LangChain 的用例与一般<a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B">语言模型</a>的用例有很大的重叠。 重叠范围包括文档分析和总结摘要, 代码分析和<a href="https://zh.wikipedia.org/wiki/%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA">聊天机器人</a>。[<a href="https://zh.wikipedia.org/zh-cn/LangChain#cite_note-1">1]</a>LangChain提供了一个标准接口，用于将不同的<a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B">语言模型</a>（LLM）连接在一起，以及与其他工具和数据源的集成。LangChain还为常见应用程序提供端到端链，如<a href="https://zh.wikipedia.org/wiki/%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA">聊天机器人</a>、文档分析和代码生成。 LangChain是由Harrison Chase于2022年10月推出的<a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6">开源软件</a>项目。它已成为LLM开发中最受欢迎的框架之一。</p>
+<h2 id="rag工作模式">RAG工作模式<a hidden class="anchor" aria-hidden="true" href="#rag工作模式">#</a></h2>
+<p><strong>Retrive</strong>: give user a input , relevant splits are retrived from storage using  a Retriever</p>
+<p><strong>Generate</strong>: A <a href="https://python.langchain.com/docs/concepts/chat_models/">ChatModel</a> / <a href="https://python.langchain.com/docs/concepts/text_llms/">LLM</a> produces an answer using a prompt that includes both the question with the retrieved data</p>
+<!-- raw HTML omitted -->
+<h2 id="语句向量化">语句向量化<a hidden class="anchor" aria-hidden="true" href="#语句向量化">#</a></h2>
+<p>数据向量化可分为以下几个步骤：</p>
+<p>加载数据集</p>
+<p>划分数据</p>
+<p>存储数据（向量数据库）</p>
+<!-- raw HTML omitted -->
+<h2 id="构建ragtest">构建RAG(TEST)<a hidden class="anchor" aria-hidden="true" href="#构建ragtest">#</a></h2>
+<ol>
+<li>
+<p><strong>A chat model</strong></p>
+<p>ChatGPT</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install -qU langchain-openai
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> getpass
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#34;OPENAI_API_KEY&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your_openai_key&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_openai <span style="color:#f92672">import</span> ChatOpenAI
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>llm <span style="color:#f92672">=</span> ChatOpenAI(model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpt-3-turbo&#34;</span>)
+</span></span></code></pre></div><p>本地llama</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_ollama <span style="color:#f92672">import</span> OllamaEmbeddings
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_ollama <span style="color:#f92672">import</span> ChatOllama
+</span></span><span style="display:flex;"><span>embeddings <span style="color:#f92672">=</span> OllamaEmbeddings(
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;wangshenzhi/llama3-8b-chinese-chat-ollama-q4&#34;</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>llm <span style="color:#f92672">=</span> ChatOllama(model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;wangshenzhi/llama3-8b-chinese-chat-ollama-q4&#34;</span>)
+</span></span></code></pre></div></li>
+<li>
+<p><strong>A embedding model</strong></p>
+<pre tabindex="0"><code>pip install -qU langchain-openai
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> getpass
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#34;OPENAI_API_KEY&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your_openai_key&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_openai <span style="color:#f92672">import</span> OpenAIEmbeddings
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>embeddings <span style="color:#f92672">=</span> OpenAIEmbeddings(model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-embedding-3-large&#34;</span>)
+</span></span></code></pre></div></li>
+<li>
+<p><strong>A vector store</strong></p>
+<p>这里以<a href="https://github.com/pgvector/pgvector"><strong>PostgreSQL</strong></a>为向量数据库</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install -qU langchain-postgres
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_postgres <span style="color:#f92672">import</span> PGVector
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vector_store <span style="color:#f92672">=</span> PGVector(
+</span></span><span style="display:flex;"><span>    embedding<span style="color:#f92672">=</span>embeddings,
+</span></span><span style="display:flex;"><span>    collection_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;my_docs&#34;</span>,
+</span></span><span style="display:flex;"><span>    connection<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;postgresql+psycopg://...&#34;</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div></li>
+<li>
+<p><strong>解析文本</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain <span style="color:#f92672">import</span> hub
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_community.document_loaders <span style="color:#f92672">import</span> WebBaseLoader, PyPDFLoader
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_core.documents <span style="color:#f92672">import</span> Document
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_text_splitters <span style="color:#f92672">import</span> RecursiveCharacterTextSplitter
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langgraph.graph <span style="color:#f92672">import</span> START, StateGraph
+</span></span><span style="display:flex;"><span>loader <span style="color:#f92672">=</span> PyPDFLoader(<span style="color:#e6db74">&#39;./PCTA报考.pdf&#39;</span>)
+</span></span><span style="display:flex;"><span>pages <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">for</span> page <span style="color:#f92672">in</span> loader<span style="color:#f92672">.</span>alazy_load():
+</span></span><span style="display:flex;"><span>    pages<span style="color:#f92672">.</span>append(page)
+</span></span><span style="display:flex;"><span>text_splitter <span style="color:#f92672">=</span> RecursiveCharacterTextSplitter(chunk_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>, chunk_overlap<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span>all_splits <span style="color:#f92672">=</span> text_splitter<span style="color:#f92672">.</span>split_documents(pages)
+</span></span><span style="display:flex;"><span>_ <span style="color:#f92672">=</span> vector_store<span style="color:#f92672">.</span>add_documents(documents<span style="color:#f92672">=</span>all_splits)
+</span></span></code></pre></div></li>
+<li>
+<p><strong>数据相关性</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>prompt <span style="color:#f92672">=</span> hub<span style="color:#f92672">.</span>pull(<span style="color:#e6db74">&#34;rlm/rag-prompt&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Define state for application</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">State</span>(TypedDict):
+</span></span><span style="display:flex;"><span>    question: str
+</span></span><span style="display:flex;"><span>    context: List[Document]
+</span></span><span style="display:flex;"><span>    answer: str
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Define application steps</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">retrieve</span>(state: State):
+</span></span><span style="display:flex;"><span>    retrieved_docs <span style="color:#f92672">=</span> vector_store<span style="color:#f92672">.</span>similarity_search(state[<span style="color:#e6db74">&#34;question&#34;</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;context&#34;</span>: retrieved_docs}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate</span>(state: State):
+</span></span><span style="display:flex;"><span>    docs_content <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(doc<span style="color:#f92672">.</span>page_content <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> state[<span style="color:#e6db74">&#34;context&#34;</span>])
+</span></span><span style="display:flex;"><span>    messages <span style="color:#f92672">=</span> prompt<span style="color:#f92672">.</span>invoke({<span style="color:#e6db74">&#34;question&#34;</span>: state[<span style="color:#e6db74">&#34;question&#34;</span>], <span style="color:#e6db74">&#34;context&#34;</span>: docs_content})
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> llm<span style="color:#f92672">.</span>invoke(messages)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;answer&#34;</span>: response<span style="color:#f92672">.</span>content}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compile application and test</span>
+</span></span><span style="display:flex;"><span>graph_builder <span style="color:#f92672">=</span> StateGraph(State)<span style="color:#f92672">.</span>add_sequence([retrieve, generate])
+</span></span><span style="display:flex;"><span>graph_builder<span style="color:#f92672">.</span>add_edge(START, <span style="color:#e6db74">&#34;retrieve&#34;</span>)
+</span></span><span style="display:flex;"><span>graph <span style="color:#f92672">=</span> graph_builder<span style="color:#f92672">.</span>compile()
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="效果">效果<a hidden class="anchor" aria-hidden="true" href="#效果">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>response <span style="color:#f92672">=</span> graph<span style="color:#f92672">.</span>invoke({<span style="color:#e6db74">&#34;question&#34;</span>: <span style="color:#e6db74">&#34;我要报名PCTA考试，我要联系哪个老师。&#34;</span>})
+</span></span><span style="display:flex;"><span>print(response[<span style="color:#e6db74">&#34;answer&#34;</span>])
+</span></span></code></pre></div><pre tabindex="0"><code>要报名PCTA考试，你需要联系叶老师。学校已经是PingCAP的教育合作伙伴，并且有资格参与该项的学习和考试。具体操作如下：首先登录PingCAP的学习中心，注册账号并选择常州工学院，然后进入课程“TiDB数据库核心原理与架构 [TiDB v6]”进行学习。完成课程后，你就可以报名参加PCTA考试了。如果你准备好参加考试，请联系叶老师进行确认和报名流程。
+</code></pre>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">Aerith</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

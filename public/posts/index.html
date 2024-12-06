@@ -111,38 +111,24 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">Code_test
+    <h2 class="entry-hint-parent">Langchain尝试
     </h2>
   </header>
   <div class="entry-content">
-    <p>def fib(n): if(n==0 or n==1): return 1 else: return fib(n-1) &#43; fib(n-2) </p>
+    <p>LangChain浅尝试 LangChain 是一个应用框架，旨在简化使用大型语言模型的应用程序。作为一个语言模型集成框架，LangChain 的用例与一般语言模型的用例有很大的重叠。 重叠范围包括文档分析和总结摘要, 代码分析和聊天机器人。[1]LangChain提供了一个标准接口，用于将不同的语言模型（LLM）连接在一起，以及与其他工具和数据源的集成。LangChain还为常见应用程序提供端到端链，如聊天机器人、文档分析和代码生成。 LangChain是由Harrison Chase于2022年10月推出的开源软件项目。它已成为LLM开发中最受欢迎的框架之一。
+RAG工作模式 Retrive: give user a input , relevant splits are retrived from storage using a Retriever
+Generate: A ChatModel / LLM produces an answer using a prompt that includes both the question with the retrieved data
+语句向量化 数据向量化可分为以下几个步骤：
+加载数据集
+划分数据
+存储数据（向量数据库）
+构建RAG(TEST) A chat model
+ChatGPT
+pip install -qU langchain-openai import getpass import os os.environ[&#34;OPENAI_API_KEY&#34;] = &#34;your_openai_key&#34; from langchain_openai import ChatOpenAI llm = ChatOpenAI(model=&#34;gpt-3-turbo&#34;) 本地llama
+...</p>
   </div>
-  <footer class="entry-footer"><span title='2024-11-24 23:23:55 +0800 CST'>November 24, 2024</span></footer>
-  <a class="entry-link" aria-label="post link to Code_test" href="http://localhost:1313/posts/code_test/code_test/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Second Blog
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p></p>
-  </div>
-  <footer class="entry-footer"><span title='2024-11-24 11:22:36 +0800 CST'>November 24, 2024</span></footer>
-  <a class="entry-link" aria-label="post link to Second Blog" href="http://localhost:1313/posts/second/second-blog/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">First Blog
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p></p>
-  </div>
-  <footer class="entry-footer"><span title='2024-11-24 11:18:53 +0800 CST'>November 24, 2024</span></footer>
-  <a class="entry-link" aria-label="post link to First Blog" href="http://localhost:1313/posts/first/first-blog/"></a>
+  <footer class="entry-footer"><span title='2024-12-06 11:58:35 +0800 CST'>December 6, 2024</span></footer>
+  <a class="entry-link" aria-label="post link to Langchain尝试" href="http://localhost:1313/posts/langchain/langchain/"></a>
 </article>
     </main>
     

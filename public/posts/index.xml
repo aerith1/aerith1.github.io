@@ -2,25 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Aerith</title>
-    <link>http://localhost:57177/posts/</link>
+    <link>http://localhost:50260/posts/</link>
     <description>Recent content in Posts on Aerith</description>
     <generator>Hugo -- 0.139.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Mar 2025 22:50:39 +0800</lastBuildDate>
-    <atom:link href="http://localhost:57177/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Mar 2025 00:12:30 +0800</lastBuildDate>
+    <atom:link href="http://localhost:50260/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mfsuki</title>
+      <link>http://localhost:50260/posts/20250316/mfsuki/</link>
+      <pubDate>Mon, 17 Mar 2025 00:12:30 +0800</pubDate>
+      <guid>http://localhost:50260/posts/20250316/mfsuki/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Mf</title>
-      <link>http://localhost:57177/posts/20250316/mf/</link>
+      <link>http://localhost:50260/posts/20250316/mf/</link>
       <pubDate>Sun, 16 Mar 2025 22:50:39 +0800</pubDate>
-      <guid>http://localhost:57177/posts/20250316/mf/</guid>
+      <guid>http://localhost:50260/posts/20250316/mf/</guid>
       <description>&lt;h1 id=&#34;20250316&#34;&gt;20250316&lt;/h1&gt;
 &lt;p&gt;今天在南京&lt;/p&gt;</description>
     </item>
     <item>
       <title>Langchain尝试</title>
-      <link>http://localhost:57177/posts/langchain/langchain/</link>
+      <link>http://localhost:50260/posts/langchain/langchain/</link>
       <pubDate>Fri, 06 Dec 2024 11:58:35 +0800</pubDate>
-      <guid>http://localhost:57177/posts/langchain/langchain/</guid>
+      <guid>http://localhost:50260/posts/langchain/langchain/</guid>
       <description>&lt;h1 id=&#34;langchain浅尝试&#34;&gt;LangChain浅尝试&lt;/h1&gt;
 &lt;p&gt;LangChain 是一个&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6&#34;&gt;应用框架&lt;/a&gt;，旨在简化使用&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B&#34;&gt;大型语言模型&lt;/a&gt;的应用程序。作为一个语言模型集成框架，LangChain 的用例与一般&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B&#34;&gt;语言模型&lt;/a&gt;的用例有很大的重叠。 重叠范围包括文档分析和总结摘要, 代码分析和&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA&#34;&gt;聊天机器人&lt;/a&gt;。[&lt;a href=&#34;https://zh.wikipedia.org/zh-cn/LangChain#cite_note-1&#34;&gt;1]&lt;/a&gt;LangChain提供了一个标准接口，用于将不同的&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B&#34;&gt;语言模型&lt;/a&gt;（LLM）连接在一起，以及与其他工具和数据源的集成。LangChain还为常见应用程序提供端到端链，如&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA&#34;&gt;聊天机器人&lt;/a&gt;、文档分析和代码生成。 LangChain是由Harrison Chase于2022年10月推出的&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6&#34;&gt;开源软件&lt;/a&gt;项目。它已成为LLM开发中最受欢迎的框架之一。&lt;/p&gt;
 &lt;h2 id=&#34;rag工作模式&#34;&gt;RAG工作模式&lt;/h2&gt;

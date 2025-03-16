@@ -6,8 +6,16 @@
     <description>Recent content in Posts on Aerith</description>
     <generator>Hugo -- 0.139.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Dec 2024 11:58:35 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 16 Mar 2025 22:50:39 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mf</title>
+      <link>http://localhost:1313/posts/20250316/mf/</link>
+      <pubDate>Sun, 16 Mar 2025 22:50:39 +0800</pubDate>
+      <guid>http://localhost:1313/posts/20250316/mf/</guid>
+      <description>&lt;h1 id=&#34;20250316&#34;&gt;20250316&lt;/h1&gt;
+&lt;p&gt;今天在南京&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Langchain尝试</title>
       <link>http://localhost:1313/posts/langchain/langchain/</link>

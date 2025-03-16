@@ -75,6 +75,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/upload-artifact@v4
-        with:
-          path: ./public
+        uses: actions/deploy-pages@v4
